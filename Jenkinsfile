@@ -8,7 +8,7 @@ node('python') {
    
         
             sh returnStatus: true, script: "docker stop \$(docker ps -a | grep ${application} | awk '{print \$1}')"
-            sh returnStatus: true, script: "docker rmi \$(docker images | grep -iE '${dockerhubaccountid}|none' | awk '{print \$3}') --force"
+            sh returnStatus: true, script: "docker rmi \$(docker images | grep -iE '${dockerhubaccountid}|none|python' | awk '{print \$3}') --force"
             sh returnStatus: true, script: "docker rm \$(docker ps -a | grep -iE 'Exited|Created' | awk 'NR>1 {print \$1}')"
        
    

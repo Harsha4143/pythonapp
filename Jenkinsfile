@@ -9,7 +9,7 @@ node('python') {
         
             sh returnStatus: true, script: "docker stop \$(docker ps -a | grep ${application} | awk '{print \$1}')"
             sh returnStatus: true, script: "docker rmi \$(docker images | grep ${dockerhubaccountid} | awk '{print \$3}') --force"
-            sh returnStatus: true, script: "docker rm \$(docker ps -a | grep -iE 'Exited|Created' | awk '{print \$1}')"
+            sh returnStatus: true, script: "docker rm \$(docker ps -a | grep -iE 'Exited|Created' | awk 'NR>1 {print \$1}')"
        
    
 }
@@ -31,5 +31,11 @@ node('python') {
         sh ("docker run -d -p 3333:3333 ${dockerhubaccountid}/${application}:${BUILD_NUMBER}")
     }
 
-   
+   stage('Remove old images') {
+        // remove old docker images
+       script {
+
+        sh("docker rmi ${dockerhubaccountid}/${application}:latest -f")
+       }
+   }
 }

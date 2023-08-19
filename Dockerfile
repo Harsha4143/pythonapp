@@ -10,4 +10,5 @@ FROM python:3.8-slim
 COPY --from=builder /src /src
 WORKDIR /src
 EXPOSE 3333
+ENTRYPOINT ["python"]
 CMD ["./src/helloworld.py"]

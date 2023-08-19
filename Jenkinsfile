@@ -10,13 +10,13 @@ node('python') {
     }
 
     stage('Clean Up') {
-    steps {
+    
         script {
             sh returnStatus: true, script: "docker stop \$(docker ps -a | grep -i ${JOB_NAME} | awk '{print \$1}')"
             sh returnStatus: true, script: "docker rmi \$(docker images | grep ${dockerhubaccountid} | awk '{print \$3}') --force"
             sh returnStatus: true, script: "docker rm ${JOB_NAME}"
         }
-    }
+    
 }
 
     stage('Push image') {

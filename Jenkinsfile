@@ -1,4 +1,4 @@
-node {
+node('python') {
     def application = "pythonapp"
     def dockerhubaccountid = "harsha4143"
     stage('Clone repository') {
